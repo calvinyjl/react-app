@@ -2,15 +2,18 @@
 // import type { MouseEvent } from "react";
 import { useState } from "react";
 
-function ListGroup() {
-  let items = ["New York", "London", "Purley", "Crawley", "Paris"];
+interface Props {
+  items: string[];
+  heading: string;
+  onSelectItem: (item: string) => void;
+}
+
+function ListGroup({ items, heading, onSelectItem }: Props) {
   // Hook: has data or state which changes over time
   // Re-renders component when the updater function is called
   const [selectedIndex, setSelectedIndex] = useState(-1);
   //   arr[0] variable (selectedIndex)
   //   arr[1] updater function
-
-  //   const message = items.length == 0 ? <p>No items found</p> : null;
 
   const getMessage = () => {
     // return items.length == 0 ? <p>No items found</p> : null;
@@ -28,7 +31,7 @@ function ListGroup() {
   // Empty elements are a Fragment in React
   return (
     <>
-      <h1>List</h1>
+      <h1>{heading}</h1>
       {items.length === 0 && <p>No items found</p>}
       <ul className="list-group">
         {items.map((item, index) => (
@@ -41,6 +44,7 @@ function ListGroup() {
             key={item}
             onClick={() => {
               setSelectedIndex(index);
+              onSelectItem(item);
             }}
           >
             {item}
